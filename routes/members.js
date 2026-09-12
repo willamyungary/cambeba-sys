@@ -127,6 +127,16 @@ router.get('/:id/log', async (req, res) => {
   res.render('member-log', { member: memberResult.rows[0], history: history.rows });
 });
 
+// Consultar apontamentos do membro
+router.get('/:id/apontamentos', async (req, res) => {
+  const result = await pool.query(
+    'SELECT id, full_name, notes FROM members WHERE id = $1',
+    [req.params.id]
+  );
+  if (!result.rows[0]) return res.status(404).send('Membro não encontrado.');
+  res.render('member-notes', { member: result.rows[0] });
+});
+
 // Formulário de edição
 router.get('/:id/edit', async (req, res) => {
   const result = await pool.query('SELECT * FROM members WHERE id = $1', [req.params.id]);

@@ -1,0 +1,17 @@
+<%- include('partials/header', { title: 'Apontamentos - ' + member.full_name }) %>
+
+<h2 class="page-title">Apontamentos: <%= member.full_name %></h2>
+
+<div class="card">
+  <% if (member.notes) { %>
+    <div style="white-space: pre-wrap;"><%= member.notes %></div>
+  <% } else { %>
+    <p>Nenhum apontamento registrado para este membro.</p>
+  <% } %>
+</div>
+
+<div class="actions-row">
+  <a href="/members/<%= member.id %>" class="btn btn-outline">Voltar para a ficha</a>
+</div>
+
+<%- include('partials/footer') %>
