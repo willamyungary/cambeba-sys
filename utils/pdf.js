@@ -1,4 +1,5 @@
 const PDFDocument = require('pdfkit');
+const path = require('path');
 
 // Paleta baseada na identidade visual da IP Cambeba:
 // anel cinza metálico, cruz marrom/bronze, texto cinza-chumbo
@@ -10,30 +11,34 @@ const COLORS = {
   bg: '#f5f5f5'
 };
 
+const MEMBER_CARD_WIDTH = 85.6 * 72 / 25.4;
+const MEMBER_CARD_HEIGHT = 53.98 * 72 / 25.4;
+const MEMBER_CARD_LOGO = path.join(__dirname, '../public/img/logo-igreja2.png');
+
 function formatDate(d) {
   if (!d) return '-';
   const date = new Date(d);
   return date.toLocaleDateString('pt-BR', { timeZone: 'UTC' });
 }
 
-// ---------- Carteirinha de membro (formato cartão, ~ carteira de identidade) ----------
+// ---------- Carteirinha de membro (padrão ID-1: 85,60 x 53,98 mm) ----------
 function generateMemberCard(member) {
-  const doc = new PDFDocument({ size: [255, 380], margin: 0 });
+  const doc = new PDFDocument({ size: [MEMBER_CARD_WIDTH, MEMBER_CARD_HEIGHT], margin: 0 });
 
-  // Fundo
-  doc.rect(0, 0, 255, 380).fill(COLORS.bg);
+  // Fundo e contorno do cartão
+  doc.roundedRect(0.5, 0.5, MEMBER_CARD_WIDTH - 1, MEMBER_CARD_HEIGHT - 1, 5)
+    .fillAndStroke('#ffffff', COLORS.gray);
 
-  // Cabeçalho colorido
-  doc.rect(0, 0, 255, 70).fill(COLORS.gray);
-  doc.rect(0, 66, 255, 4).fill(COLORS.bronze);
-
-  doc.fillColor('#ffffff').fontSize(11).font('Helvetica-Bold')
-    .text('IGREJA PRESBITERIANA', 12, 14, { width: 231, align: 'center' });
-  doc.fontSize(11).text('DO CAMBEBA', 12, 28, { width: 231, align: 'center' });
-  doc.fontSize(7).font('Helvetica').text('CARTEIRA DE MEMBRO', 12, 48, { width: 231, align: 'center' });
+  // Identidade visual
+  doc.image(MEMBER_CARD_LOGO, 8, 4, { fit: [43, 43] });
+  doc.fillColor(COLORS.gray).fontSize(7).font('Helvetica-Bold')
+    .text('CARTEIRA DE MEMBRO', 58, 13, { width: 105, align: 'left' });
+  doc.fillColor(COLORS.bronze).fontSize(5.5).font('Helvetica')
+    .text('Igreja Presbiteriana do Cambeba', 58, 24, { width: 105, align: 'left' });
+  doc.rect(0, 51, MEMBER_CARD_WIDTH, 2).fill(COLORS.bronze);
 
   // Foto
-  const photoX = 87, photoY = 84, photoSize = 80;
+  const photoX = 187, photoY = 61, photoSize = 45;
   doc.roundedRect(photoX - 2, photoY - 2, photoSize + 4, photoSize + 4, 4).fill('#ffffff');
   if (member.photo) {
     try {
@@ -48,24 +53,24 @@ function generateMemberCard(member) {
   doc.rect(photoX, photoY, photoSize, photoSize).strokeColor(COLORS.bronze).lineWidth(1.5).stroke();
 
   // Nome
-  doc.fillColor(COLORS.charcoal).fontSize(12).font('Helvetica-Bold')
-    .text(member.full_name || '', 12, 178, { width: 231, align: 'center' });
+  doc.fillColor(COLORS.charcoal).fontSize(9).font('Helvetica-Bold')
+    .text(member.full_name || '', 10, 61, { width: 168, height: 12, ellipsis: true });
 
   // Função/cargo
   if (member.role_in_church) {
-    doc.fontSize(9).font('Helvetica-Oblique').fillColor(COLORS.bronze)
-      .text(member.role_in_church, 12, 196, { width: 231, align: 'center' });
+    doc.fontSize(6.5).font('Helvetica-Oblique').fillColor(COLORS.bronze)
+      .text(member.role_in_church, 10, 75, { width: 168, height: 9, ellipsis: true });
   }
 
   // Linha divisória
-  doc.moveTo(20, 216).lineTo(235, 216).strokeColor(COLORS.gray).lineWidth(0.5).stroke();
+  doc.moveTo(10, 88).lineTo(177, 88).strokeColor(COLORS.gray).lineWidth(0.5).stroke();
 
   // Dados
-  let y = 226;
-  const rowH = 16;
+  let y = 95;
+  const rowH = 10;
   const addRow = (label, value) => {
-    doc.fontSize(7.5).font('Helvetica-Bold').fillColor(COLORS.gray).text(label, 20, y);
-    doc.fontSize(9).font('Helvetica').fillColor(COLORS.charcoal).text(value || '-', 90, y - 0.5, { width: 145 });
+    doc.fontSize(5.5).font('Helvetica-Bold').fillColor(COLORS.gray).text(label, 10, y);
+    doc.fontSize(6.5).font('Helvetica').fillColor(COLORS.charcoal).text(value || '-', 67, y - 0.5, { width: 108, height: 8, ellipsis: true });
     y += rowH;
   };
 
@@ -76,10 +81,10 @@ function generateMemberCard(member) {
   addRow('SITUAÇÃO:', (member.membership_status || '').toUpperCase());
 
   // Rodapé
-  doc.rect(0, 350, 255, 30).fill(COLORS.gray);
-  doc.fillColor('#ffffff').fontSize(6.5).font('Helvetica')
-    .text('Esta carteira é pessoal e intransferível.', 12, 358, { width: 231, align: 'center' });
-  doc.fontSize(6.5).text(`Emitida em ${formatDate(new Date())}`, 12, 368, { width: 231, align: 'center' });
+  doc.rect(0, 133, MEMBER_CARD_WIDTH, 20).fill(COLORS.gray);
+  doc.fillColor('#ffffff').fontSize(5).font('Helvetica')
+    .text('Esta carteira é pessoal e intransferível.', 8, 138, { width: MEMBER_CARD_WIDTH - 16, align: 'center' });
+  doc.fontSize(5).text(`Emitida em ${formatDate(new Date())}`, 8, 146, { width: MEMBER_CARD_WIDTH - 16, align: 'center' });
 
   return doc;
 }
