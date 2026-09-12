@@ -1,0 +1,36 @@
+<%- include('partials/header', { title: 'Log - ' + member.full_name }) %>
+
+<h2 class="page-title">Log do membro: <%= member.full_name %></h2>
+
+<div class="card">
+  <% if (history.length) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Ação</th>
+          <th>Administrador</th>
+          <th>Detalhes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% history.forEach(event => { %>
+          <tr>
+            <td><%= new Date(event.created_at).toLocaleString('pt-BR') %></td>
+            <td><%= event.action %></td>
+            <td><%= event.admin_username || '-' %></td>
+            <td><%= event.details || '-' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>Nenhum evento registrado para este membro.</p>
+  <% } %>
+</div>
+
+<div class="actions-row">
+  <a href="/members/<%= member.id %>" class="btn btn-outline">Voltar para a ficha</a>
+</div>
+
+<%- include('partials/footer') %>

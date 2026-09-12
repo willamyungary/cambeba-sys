@@ -18,46 +18,19 @@
     </p>
     <p><strong>Admissão:</strong> <%= member.admission_date ? new Date(member.admission_date).toLocaleDateString('pt-BR', {timeZone:'UTC'}) : '-' %> (<%= member.admission_type || '-' %>)</p>
     <p><strong>Função:</strong> <%= member.role_in_church || '-' %></p>
-    <% if (member.notes) { %><p><strong>Observações:</strong> <%= member.notes %></p><% } %>
+    <% if (member.notes) { %><p><strong>Apontamentos:</strong> <%= member.notes %></p><% } %>
   </div>
 </div>
 
 <div class="actions-row">
   <a href="/members/<%= member.id %>/edit" class="btn btn-secondary">Editar</a>
+  <a href="/members/<%= member.id %>/log" class="btn btn-outline">Log</a>
   <a href="/members/<%= member.id %>/carteirinha" target="_blank" class="btn btn-primary">Gerar carteirinha (PDF)</a>
   <a href="/members/<%= member.id %>/exportar-dados" class="btn btn-outline">Exportar dados (LGPD)</a>
   <form action="/members/<%= member.id %>/delete" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este membro? Esta ação apaga permanentemente os dados (direito ao esquecimento - LGPD) e não pode ser desfeita.');" style="display:inline;">
     <button type="submit" class="btn btn-danger">Excluir</button>
   </form>
   <a href="/members" class="btn btn-outline">Voltar</a>
-</div>
-
-<div class="card">
-  <h3>Histórico do membro</h3>
-  <% if (history.length) { %>
-    <table>
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>Ação</th>
-          <th>Administrador</th>
-          <th>Detalhes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% history.forEach(event => { %>
-          <tr>
-            <td><%= new Date(event.created_at).toLocaleString('pt-BR') %></td>
-            <td><%= event.action %></td>
-            <td><%= event.admin_username || '-' %></td>
-            <td><%= event.details || '-' %></td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  <% } else { %>
-    <p>Nenhum evento registrado para este membro.</p>
-  <% } %>
 </div>
 
 <%- include('partials/footer') %>
