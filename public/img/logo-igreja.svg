@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 150" role="img" aria-labelledby="title desc">
+  <title id="title">Igreja Presbiteriana do Cambeba</title>
+  <desc id="desc">Símbolo circular com cruz e o nome da Igreja Presbiteriana do Cambeba.</desc>
+  <g fill="none" stroke="#686b6d" stroke-width="11" stroke-linecap="round">
+    <path d="M77 24a53 53 0 1 0 43 84" />
+    <path d="M77 39v68M43 73h68" />
+  </g>
+  <g fill="#686b6d" font-family="Arial, Helvetica, sans-serif" font-weight="700">
+    <text x="155" y="48" font-size="25" letter-spacing="1">IGREJA</text>
+    <text x="155" y="82" font-size="25" letter-spacing="1">PRESBITERIANA</text>
+    <text x="155" y="116" font-size="25" letter-spacing="1">DO CAMBEBA</text>
+  </g>
+</svg>

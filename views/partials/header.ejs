@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= typeof title !== 'undefined' ? title : 'Sistema de Membros' %> - IP Cambeba</title>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" href="/img/sem-foto.svg">
+  <link rel="icon" href="/img/logo-igreja.svg">
 </head>
 <body>
 <% if (typeof admin !== 'undefined' && admin) { %>
 <div class="navbar">
-  <div class="brand"><span class="cross">✝</span> Igreja Presbiteriana do Cambeba</div>
+  <div class="brand">
+    <img src="/img/logo-igreja.svg" alt="Igreja Presbiteriana do Cambeba">
+  </div>
   <nav>
     <a href="/">Início</a>
     <a href="/members">Membros</a>

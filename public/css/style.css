@@ -35,17 +35,15 @@ a:hover { text-decoration: underline; }
 }
 
 .navbar .brand {
-  color: #fff;
-  font-weight: 700;
-  font-size: 1.1rem;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
 }
 
-.navbar .brand .cross {
-  color: var(--color-bronze-light);
-  font-size: 1.3rem;
+.navbar .brand img {
+  width: 220px;
+  height: auto;
+  display: block;
+  filter: brightness(0) invert(1);
 }
 
 .navbar nav a {
@@ -197,6 +195,12 @@ legend {
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   border-top: 5px solid var(--color-bronze);
   text-align: center;
+}
+.login-logo {
+  width: min(100%, 270px);
+  height: auto;
+  display: block;
+  margin: 0 auto 1.2rem;
 }
 .login-box h1 { font-size: 1.15rem; margin-bottom: 0.2rem; }
 .login-box .sub { font-size: 0.8rem; color: #888; margin-bottom: 1.5rem; }
