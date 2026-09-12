@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= typeof title !== 'undefined' ? title : 'Sistema de Membros' %> - IP Cambeba</title>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" href="/img/logo-igreja.png">
+  <link rel="icon" href="/img/logo-igreja2.png">
 </head>
 <body>
 <% if (typeof admin !== 'undefined' && admin) { %>
 <div class="navbar">
   <div class="brand">
-    <img src="/img/logo-igreja.png" alt="Igreja Presbiteriana do Cambeba">
+    <img src="/img/logo-igreja2.png" alt="Igreja Presbiteriana do Cambeba">
   </div>
   <nav>
     <a href="/">Início</a>
@@ -22,7 +22,7 @@
     Olá, <%= admin.name %>
     &nbsp;•&nbsp;
     <form action="/logout" method="POST" style="display:inline">
-      <button type="submit" style="background:none;border:none;color:#eceeef;cursor:pointer;text-decoration:underline;font-size:0.85rem;">Sair</button>
+      <button type="submit" style="background:none;border:none;color:var(--color-gray);cursor:pointer;text-decoration:underline;font-size:0.85rem;">Sair</button>
     </form>
   </div>
 </div>
