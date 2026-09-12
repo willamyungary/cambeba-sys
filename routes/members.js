@@ -137,6 +137,35 @@ router.get('/:id/apontamentos', async (req, res) => {
   res.render('member-notes', { member: result.rows[0] });
 });
 
+// Formulário para novo apontamento
+router.get('/:id/apontamentos/novo', async (req, res) => {
+  const result = await pool.query('SELECT id, full_name FROM members WHERE id = $1', [req.params.id]);
+  if (!result.rows[0]) return res.status(404).send('Membro não encontrado.');
+  res.render('member-note-form', { member: result.rows[0], error: null });
+});
+
+// Adicionar apontamento ao membro
+router.post('/:id/apontamentos', async (req, res) => {
+  const note = (req.body.note || '').trim();
+  const result = await pool.query('SELECT id, full_name, notes FROM members WHERE id = $1', [req.params.id]);
+  if (!result.rows[0]) return res.status(404).send('Membro não encontrado.');
+
+  if (!note) {
+    return res.render('member-note-form', {
+      member: result.rows[0],
+      error: 'Digite um apontamento antes de salvar.'
+    });
+  }
+
+  const notes = result.rows[0].notes ? `${result.rows[0].notes}\n\n${note}` : note;
+  await pool.query(
+    'UPDATE members SET notes = $1, updated_at = NOW(), updated_by = $2 WHERE id = $3',
+    [notes, req.session.admin.id, req.params.id]
+  );
+  await logAction(req, 'update', req.params.id, 'Novo apontamento adicionado');
+  res.redirect(`/members/${req.params.id}/apontamentos`);
+});
+
 // Formulário de edição
 router.get('/:id/edit', async (req, res) => {
   const result = await pool.query('SELECT * FROM members WHERE id = $1', [req.params.id]);
