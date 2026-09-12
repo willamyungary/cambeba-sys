@@ -40,10 +40,9 @@ a:hover { text-decoration: underline; }
 }
 
 .navbar .brand img {
-  width: 220px;
+  width: 180px;
   height: auto;
   display: block;
-  filter: brightness(0) invert(1);
 }
 
 .navbar nav a {
