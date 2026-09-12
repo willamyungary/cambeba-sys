@@ -32,4 +32,32 @@
   <a href="/members" class="btn btn-outline">Voltar</a>
 </div>
 
+<div class="card">
+  <h3>Histórico do membro</h3>
+  <% if (history.length) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Ação</th>
+          <th>Administrador</th>
+          <th>Detalhes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% history.forEach(event => { %>
+          <tr>
+            <td><%= new Date(event.created_at).toLocaleString('pt-BR') %></td>
+            <td><%= event.action %></td>
+            <td><%= event.admin_username || '-' %></td>
+            <td><%= event.details || '-' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>Nenhum evento registrado para este membro.</p>
+  <% } %>
+</div>
+
 <%- include('partials/footer') %>

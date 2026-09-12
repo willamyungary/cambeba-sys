@@ -109,7 +109,14 @@ router.get('/:id', async (req, res) => {
   const result = await pool.query('SELECT * FROM members WHERE id = $1', [req.params.id]);
   if (!result.rows[0]) return res.status(404).send('Membro não encontrado.');
   await logAction(req, 'view', req.params.id, null);
-  res.render('member-view', { member: memberViewModel(result.rows[0]) });
+  const history = await pool.query(
+    `SELECT action, admin_username, details, created_at
+     FROM audit_log
+     WHERE member_id = $1
+     ORDER BY created_at DESC, id DESC`,
+    [req.params.id]
+  );
+  res.render('member-view', { member: memberViewModel(result.rows[0]), history: history.rows });
 });
 
 // Formulário de edição
