@@ -1,0 +1,33 @@
+<%- include('partials/header', { title: 'Início' }) %>
+
+<h2 class="page-title">Painel</h2>
+
+<div class="stats-grid">
+  <div class="stat-box">
+    <div class="number"><%= stats.total %></div>
+    <div class="label">Membros cadastrados</div>
+  </div>
+  <div class="stat-box">
+    <div class="number"><%= stats.ativos %></div>
+    <div class="label">Membros ativos</div>
+  </div>
+  <div class="stat-box">
+    <div class="number"><%= stats.outros %></div>
+    <div class="label">Inativos / transferidos / outros</div>
+  </div>
+  <div class="stat-box">
+    <div class="number"><%= stats.aniversariantes_mes %></div>
+    <div class="label">Aniversariantes este mês</div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Ações rápidas</h3>
+  <div class="actions-row">
+    <a href="/members/new" class="btn btn-primary">+ Novo membro</a>
+    <a href="/members" class="btn btn-outline">Ver todos os membros</a>
+    <a href="/reports" class="btn btn-outline">Relatórios</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

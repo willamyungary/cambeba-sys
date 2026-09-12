@@ -1,0 +1,35 @@
+<%- include('partials/header', { title: member.full_name }) %>
+
+<h2 class="page-title"><%= member.full_name %></h2>
+
+<div class="card" style="display:flex; gap:1.5rem; flex-wrap:wrap;">
+  <div>
+    <img class="photo-preview" style="width:160px;height:160px;" src="/members/<%= member.id %>/photo" alt="">
+    <span class="badge badge-<%= member.membership_status %>"><%= member.membership_status %></span>
+  </div>
+  <div style="flex:1; min-width:260px;">
+    <p><strong>CPF:</strong> <%= member.cpf_masked || '-' %></p>
+    <p><strong>RG:</strong> <%= member.rg || '-' %></p>
+    <p><strong>Nascimento:</strong> <%= member.birth_date ? new Date(member.birth_date).toLocaleDateString('pt-BR', {timeZone:'UTC'}) : '-' %></p>
+    <p><strong>Gênero:</strong> <%= member.gender || '-' %> &nbsp; <strong>Estado civil:</strong> <%= member.marital_status || '-' %></p>
+    <p><strong>Telefone:</strong> <%= member.phone || '-' %> &nbsp; <strong>E-mail:</strong> <%= member.email || '-' %></p>
+    <p><strong>Endereço:</strong>
+      <%= [member.address_street, member.address_number, member.address_district, member.address_city, member.address_state].filter(Boolean).join(', ') || '-' %>
+    </p>
+    <p><strong>Admissão:</strong> <%= member.admission_date ? new Date(member.admission_date).toLocaleDateString('pt-BR', {timeZone:'UTC'}) : '-' %> (<%= member.admission_type || '-' %>)</p>
+    <p><strong>Função:</strong> <%= member.role_in_church || '-' %></p>
+    <% if (member.notes) { %><p><strong>Observações:</strong> <%= member.notes %></p><% } %>
+  </div>
+</div>
+
+<div class="actions-row">
+  <a href="/members/<%= member.id %>/edit" class="btn btn-secondary">Editar</a>
+  <a href="/members/<%= member.id %>/carteirinha" target="_blank" class="btn btn-primary">Gerar carteirinha (PDF)</a>
+  <a href="/members/<%= member.id %>/exportar-dados" class="btn btn-outline">Exportar dados (LGPD)</a>
+  <form action="/members/<%= member.id %>/delete" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este membro? Esta ação apaga permanentemente os dados (direito ao esquecimento - LGPD) e não pode ser desfeita.');" style="display:inline;">
+    <button type="submit" class="btn btn-danger">Excluir</button>
+  </form>
+  <a href="/members" class="btn btn-outline">Voltar</a>
+</div>
+
+<%- include('partials/footer') %>

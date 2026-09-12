@@ -1,0 +1,62 @@
+<%- include('partials/header', { title: 'Membros' }) %>
+
+<h2 class="page-title">Membros</h2>
+
+<div class="filters">
+  <form method="GET" action="/members">
+    <div class="field">
+      <label>Buscar por nome</label>
+      <input type="text" name="q" value="<%= q %>" placeholder="Digite o nome...">
+    </div>
+    <div class="field">
+      <label>Situação</label>
+      <select name="status">
+        <option value="">Todas</option>
+        <% statuses.forEach(function(s) { %>
+          <option value="<%= s %>" <%= status === s ? 'selected' : '' %>><%= s.charAt(0).toUpperCase() + s.slice(1) %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="field" style="flex: 0;">
+      <button type="submit" class="btn btn-secondary">Filtrar</button>
+    </div>
+  </form>
+</div>
+
+<div class="actions-row">
+  <a href="/members/new" class="btn btn-primary">+ Novo membro</a>
+</div>
+
+<div class="card" style="padding:0;">
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Nome</th>
+        <th>Nascimento</th>
+        <th>Admissão</th>
+        <th>Situação</th>
+        <th>Função</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (members.length === 0) { %>
+        <tr><td colspan="7" style="text-align:center; padding: 1.5rem;">Nenhum membro encontrado.</td></tr>
+      <% } %>
+      <% members.forEach(function(m) { %>
+        <tr>
+          <td><img class="photo-thumb" src="<%= m.has_photo ? '/members/' + m.id + '/photo' : '/img/sem-foto.svg' %>" alt=""></td>
+          <td><a href="/members/<%= m.id %>"><%= m.full_name %></a></td>
+          <td><%= m.birth_date ? new Date(m.birth_date).toLocaleDateString('pt-BR', {timeZone:'UTC'}) : '-' %></td>
+          <td><%= m.admission_date ? new Date(m.admission_date).toLocaleDateString('pt-BR', {timeZone:'UTC'}) : '-' %></td>
+          <td><span class="badge badge-<%= m.membership_status %>"><%= m.membership_status %></span></td>
+          <td><%= m.role_in_church || '-' %></td>
+          <td><a href="/members/<%= m.id %>/edit">editar</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('partials/footer') %>

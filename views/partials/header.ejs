@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'Sistema de Membros' %> - IP Cambeba</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/img/sem-foto.svg">
+</head>
+<body>
+<% if (typeof admin !== 'undefined' && admin) { %>
+<div class="navbar">
+  <div class="brand"><span class="cross">✝</span> Igreja Presbiteriana do Cambeba</div>
+  <nav>
+    <a href="/">Início</a>
+    <a href="/members">Membros</a>
+    <a href="/reports">Relatórios</a>
+  </nav>
+  <div class="user-box">
+    Olá, <%= admin.name %>
+    &nbsp;•&nbsp;
+    <form action="/logout" method="POST" style="display:inline">
+      <button type="submit" style="background:none;border:none;color:#eceeef;cursor:pointer;text-decoration:underline;font-size:0.85rem;">Sair</button>
+    </form>
+  </div>
+</div>
+<% } %>
+<div class="container">

@@ -1,0 +1,157 @@
+<%- include('partials/header', { title: member && member.id ? 'Editar Membro' : 'Novo Membro' }) %>
+
+<h2 class="page-title"><%= member && member.id ? 'Editar Membro' : 'Novo Membro' %></h2>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="alert alert-error"><%= error %></div>
+<% } %>
+
+<div class="card">
+  <form method="POST" action="<%= member && member.id ? '/members/' + member.id : '/members' %>" enctype="multipart/form-data">
+
+    <fieldset>
+      <legend>Foto</legend>
+      <% if (member && member.id) { %>
+        <img class="photo-preview" src="/members/<%= member.id %>/photo" alt="">
+      <% } %>
+      <label>Enviar foto (JPG, PNG ou WEBP, até 5MB)</label>
+      <input type="file" name="photo" accept="image/jpeg,image/png,image/webp">
+    </fieldset>
+
+    <fieldset>
+      <legend>Dados pessoais</legend>
+      <div class="form-grid">
+        <div>
+          <label>Nome completo *</label>
+          <input type="text" name="full_name" required value="<%= (member && member.full_name) || '' %>">
+        </div>
+        <div>
+          <label>CPF</label>
+          <input type="text" name="cpf" placeholder="000.000.000-00" value="<%= (member && member.cpf) || '' %>">
+        </div>
+        <div>
+          <label>RG</label>
+          <input type="text" name="rg" value="<%= (member && member.rg) || '' %>">
+        </div>
+        <div>
+          <label>Data de nascimento</label>
+          <input type="date" name="birth_date" value="<%= member && member.birth_date ? new Date(member.birth_date).toISOString().slice(0,10) : '' %>">
+        </div>
+        <div>
+          <label>Gênero</label>
+          <select name="gender">
+            <option value="">-</option>
+            <option value="Masculino" <%= member && member.gender === 'Masculino' ? 'selected' : '' %>>Masculino</option>
+            <option value="Feminino" <%= member && member.gender === 'Feminino' ? 'selected' : '' %>>Feminino</option>
+          </select>
+        </div>
+        <div>
+          <label>Estado civil</label>
+          <select name="marital_status">
+            <option value="">-</option>
+            <% ['Solteiro(a)','Casado(a)','Viúvo(a)','Divorciado(a)'].forEach(function(o){ %>
+              <option value="<%= o %>" <%= member && member.marital_status === o ? 'selected' : '' %>><%= o %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Contato</legend>
+      <div class="form-grid">
+        <div>
+          <label>Telefone / WhatsApp</label>
+          <input type="text" name="phone" value="<%= (member && member.phone) || '' %>">
+        </div>
+        <div>
+          <label>E-mail</label>
+          <input type="email" name="email" value="<%= (member && member.email) || '' %>">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Endereço</legend>
+      <div class="form-grid">
+        <div>
+          <label>Rua</label>
+          <input type="text" name="address_street" value="<%= (member && member.address_street) || '' %>">
+        </div>
+        <div>
+          <label>Número</label>
+          <input type="text" name="address_number" value="<%= (member && member.address_number) || '' %>">
+        </div>
+        <div>
+          <label>Bairro</label>
+          <input type="text" name="address_district" value="<%= (member && member.address_district) || '' %>">
+        </div>
+        <div>
+          <label>Cidade</label>
+          <input type="text" name="address_city" value="<%= (member && member.address_city) || 'Fortaleza' %>">
+        </div>
+        <div>
+          <label>UF</label>
+          <input type="text" name="address_state" maxlength="2" value="<%= (member && member.address_state) || 'CE' %>">
+        </div>
+        <div>
+          <label>CEP</label>
+          <input type="text" name="address_zip" value="<%= (member && member.address_zip) || '' %>">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Dados eclesiásticos</legend>
+      <div class="form-grid">
+        <div>
+          <label>Data de admissão</label>
+          <input type="date" name="admission_date" value="<%= member && member.admission_date ? new Date(member.admission_date).toISOString().slice(0,10) : '' %>">
+        </div>
+        <div>
+          <label>Tipo de admissão</label>
+          <select name="admission_type">
+            <option value="">-</option>
+            <% admissionTypes.forEach(function(t) { %>
+              <option value="<%= t %>" <%= member && member.admission_type === t ? 'selected' : '' %>><%= t %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div>
+          <label>Função na igreja</label>
+          <input type="text" name="role_in_church" placeholder="Membro, Presbítero, Diácono..." value="<%= (member && member.role_in_church) || '' %>">
+        </div>
+        <div>
+          <label>Situação</label>
+          <select name="membership_status">
+            <% statuses.forEach(function(s) { %>
+              <option value="<%= s %>" <%= member && member.membership_status === s ? 'selected' : (s === 'ativo' && !member ? 'selected' : '') %>><%= s.charAt(0).toUpperCase() + s.slice(1) %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+      <label>Observações</label>
+      <textarea name="notes" rows="3"><%= (member && member.notes) || '' %></textarea>
+    </fieldset>
+
+    <% if (!member || !member.id) { %>
+    <div class="lgpd-notice">
+      <strong>Consentimento LGPD:</strong> ao marcar esta opção, você confirma que o titular dos dados (ou seu responsável legal)
+      foi informado sobre a coleta e o tratamento de seus dados pessoais pela Igreja Presbiteriana do Cambeba,
+      para fins de gestão do cadastro de membros, conforme a Lei nº 13.709/2018 (LGPD), e concorda com esse tratamento.
+      <br><br>
+      <label style="display:inline-flex; align-items:center; gap:0.5rem; font-weight:600;">
+        <input type="checkbox" name="lgpd_consent" value="1" style="width:auto;" required>
+        Confirmo que obtive o consentimento do titular dos dados.
+      </label>
+    </div>
+    <% } %>
+
+    <div class="actions-row" style="margin-top:1.5rem;">
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      <a href="/members" class="btn btn-outline">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/footer') %>

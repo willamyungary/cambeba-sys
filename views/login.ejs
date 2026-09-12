@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Sistema de Membros IP Cambeba</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-box">
+      <h1>✝ Igreja Presbiteriana do Cambeba</h1>
+      <div class="sub">Sistema de Cadastro de Membros</div>
+
+      <% if (error) { %>
+        <div class="alert alert-error"><%= error %></div>
+      <% } %>
+
+      <form method="POST" action="/login">
+        <label>Usuário</label>
+        <input type="text" name="username" required autofocus>
+        <label>Senha</label>
+        <input type="password" name="password" required>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1.4rem;">Entrar</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

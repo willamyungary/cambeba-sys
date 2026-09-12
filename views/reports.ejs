@@ -1,0 +1,34 @@
+<%- include('partials/header', { title: 'Relatórios' }) %>
+
+<h2 class="page-title">Relatórios</h2>
+
+<div class="report-links">
+  <div class="card">
+    <h3>Membros ativos</h3>
+    <p>Lista completa de todos os membros com situação "ativo", em PDF, pronta para impressão.</p>
+    <a href="/reports/membros-ativos" target="_blank" class="btn btn-primary">Gerar PDF</a>
+  </div>
+
+  <div class="card">
+    <h3>Aniversariantes do mês</h3>
+    <p>Lista de aniversariantes de um mês específico entre os membros ativos.</p>
+    <form action="/reports/aniversariantes" method="GET" target="_blank">
+      <label>Mês</label>
+      <select name="mes">
+        <% const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro']; %>
+        <% meses.forEach(function(m, i) { %>
+          <option value="<%= i+1 %>" <%= (i+1) === currentMonth ? 'selected' : '' %>><%= m %></option>
+        <% }) %>
+      </select>
+      <button type="submit" class="btn btn-primary" style="margin-top:0.8rem;">Gerar PDF</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Carteirinha de membro</h3>
+    <p>Acesse o cadastro do membro desejado e clique em "Gerar carteirinha" para emitir o PDF individual.</p>
+    <a href="/members" class="btn btn-outline">Ir para lista de membros</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
