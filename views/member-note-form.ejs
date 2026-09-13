@@ -9,7 +9,7 @@
   <form method="POST" action="/members/<%= member.id %>/apontamentos">
     <label for="note">Apontamento</label>
     <textarea id="note" name="note" rows="6" required autofocus></textarea>
-    <div class="actions-row" style="margin-top:1.5rem;">
+    <div class="actions-row actions-row-spaced">
       <button type="submit" class="btn btn-primary">Salvar apontamento</button>
       <a href="/members/<%= member.id %>/apontamentos" class="btn btn-outline">Cancelar</a>
     </div>

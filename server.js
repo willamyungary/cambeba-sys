@@ -77,7 +77,7 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).send('Ocorreu um erro no servidor: ' + err.message);
+  res.status(500).send('Ocorreu um erro no servidor. Tente novamente.');
 });
 
 const PORT = process.env.PORT || 3000;

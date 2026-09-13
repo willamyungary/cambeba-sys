@@ -2,12 +2,12 @@
 
 <h2 class="page-title"><%= member.full_name %></h2>
 
-<div class="card" style="display:flex; gap:1.5rem; flex-wrap:wrap;">
+<div class="card member-summary">
   <div>
-    <img class="photo-preview" style="width:160px;height:160px;" src="/members/<%= member.id %>/photo" alt="">
+    <img class="photo-preview member-summary-photo" src="/members/<%= member.id %>/photo" alt="">
     <span class="badge badge-<%= member.membership_status %>"><%= member.membership_status %></span>
   </div>
-  <div style="flex:1; min-width:260px;">
+  <div class="member-summary-details">
     <p><strong>CPF:</strong> <%= member.cpf_masked || '-' %></p>
     <p><strong>RG:</strong> <%= member.rg || '-' %></p>
     <p><strong>Nascimento:</strong> <%= member.birth_date ? new Date(member.birth_date).toLocaleDateString('pt-BR', {timeZone:'UTC'}) : '-' %></p>
@@ -28,7 +28,7 @@
   <a href="/members/<%= member.id %>/log" class="btn btn-outline">Log</a>
   <a href="/members/<%= member.id %>/carteirinha" target="_blank" class="btn btn-primary">Gerar carteirinha (PDF)</a>
   <a href="/members/<%= member.id %>/exportar-dados" class="btn btn-outline">Exportar dados (LGPD)</a>
-  <form action="/members/<%= member.id %>/delete" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este membro? Esta ação apaga permanentemente os dados (direito ao esquecimento - LGPD) e não pode ser desfeita.');" style="display:inline;">
+  <form class="inline-form" action="/members/<%= member.id %>/delete" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este membro? Esta ação apaga permanentemente os dados (direito ao esquecimento - LGPD) e não pode ser desfeita.');">
     <button type="submit" class="btn btn-danger">Excluir</button>
   </form>
   <a href="/members" class="btn btn-outline">Voltar</a>

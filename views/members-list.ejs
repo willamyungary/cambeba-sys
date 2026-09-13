@@ -17,7 +17,7 @@
         <% }) %>
       </select>
     </div>
-    <div class="field" style="flex: 0;">
+    <div class="field field-action">
       <button type="submit" class="btn btn-secondary">Filtrar</button>
     </div>
   </form>
@@ -27,7 +27,7 @@
   <a href="/members/new" class="btn btn-primary">+ Novo membro</a>
 </div>
 
-<div class="card" style="padding:0;">
+<div class="card table-card">
   <table>
     <thead>
       <tr>
@@ -42,7 +42,7 @@
     </thead>
     <tbody>
       <% if (members.length === 0) { %>
-        <tr><td colspan="7" style="text-align:center; padding: 1.5rem;">Nenhum membro encontrado.</td></tr>
+        <tr><td class="empty-state" colspan="7">Nenhum membro encontrado.</td></tr>
       <% } %>
       <% members.forEach(function(m) { %>
         <tr>
