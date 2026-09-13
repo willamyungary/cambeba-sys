@@ -57,6 +57,15 @@ a:hover { text-decoration: underline; }
   color: var(--color-gray);
   font-size: 0.85rem;
 }
+.logout-form { display: inline; }
+.logout-button {
+  background: none;
+  border: none;
+  color: var(--color-gray);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.85rem;
+}
 
 .container {
   max-width: 1100px;
@@ -91,6 +100,8 @@ h1, h2, h3 { color: var(--color-charcoal); }
   font-size: 0.9rem;
   text-decoration: none;
 }
+.btn-block { width: 100%; margin-top: 1.4rem; }
+.btn-form { margin-top: 0.8rem; }
 .btn-primary { background: var(--color-bronze); color: #fff; }
 .btn-primary:hover { background: var(--color-bronze-light); text-decoration: none; }
 .btn-secondary { background: var(--color-gray); color: #fff; }
@@ -251,9 +262,27 @@ legend {
 }
 .filters form { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: flex-end; width: 100%;}
 .filters .field { flex: 1; min-width: 160px; }
+.filters .field-action { flex: 0; }
 .filters label { margin-top: 0; }
 
 .actions-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.actions-row-spaced { margin-top: 1.5rem; }
+
+.table-card { padding: 0; }
+.empty-state { text-align: center; padding: 1.5rem; }
+.text-center { text-align: center; }
+.notes-content { white-space: pre-wrap; }
+.inline-form { display: inline; }
+.consent-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+.consent-label input { width: auto; }
+.member-summary { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.member-summary-photo { width: 160px; height: 160px; }
+.member-summary-details { flex: 1; min-width: 260px; }
 
 .report-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem; }
 .report-links .card h3 { margin-top:0; }

@@ -140,14 +140,14 @@
       foi informado sobre a coleta e o tratamento de seus dados pessoais pela Igreja Presbiteriana do Cambeba,
       para fins de gestão do cadastro de membros, conforme a Lei nº 13.709/2018 (LGPD), e concorda com esse tratamento.
       <br><br>
-      <label style="display:inline-flex; align-items:center; gap:0.5rem; font-weight:600;">
-        <input type="checkbox" name="lgpd_consent" value="1" style="width:auto;" required>
+      <label class="consent-label">
+        <input type="checkbox" name="lgpd_consent" value="1" required>
         Confirmo que obtive o consentimento do titular dos dados.
       </label>
     </div>
     <% } %>
 
-    <div class="actions-row" style="margin-top:1.5rem;">
+    <div class="actions-row actions-row-spaced">
       <button type="submit" class="btn btn-primary">Salvar</button>
       <a href="/members" class="btn btn-outline">Cancelar</a>
     </div>

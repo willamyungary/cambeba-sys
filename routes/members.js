@@ -183,10 +183,6 @@ router.post('/:id', upload.single('photo'), async (req, res) => {
     const cpfEncrypted = cpfDigits ? encrypt(cpfDigits) : null;
     const cpfLast4 = cpfDigits ? cpfDigits.slice(-4) : null;
 
-    const photoUpdate = req.file
-      ? ', photo = $photo, photo_mime = $photo_mime'
-      : '';
-
     const query = `
       UPDATE members SET
         full_name=$1, cpf_encrypted=$2, cpf_last4=$3, rg=$4, birth_date=$5, gender=$6,
