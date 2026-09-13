@@ -28,7 +28,12 @@ router.post('/login', async (req, res) => {
       return res.render('login', { error: 'Usuário ou senha inválidos.' });
     }
 
-    req.session.admin = { id: admin.id, username: admin.username, name: admin.name };
+    req.session.admin = {
+      id: admin.id,
+      username: admin.username,
+      name: admin.name
+    };
+    req.session.lastActivityAt = Date.now();
     await logAction(req, 'login', null, `Login de ${admin.username}`);
 
     const returnTo = req.session.returnTo;

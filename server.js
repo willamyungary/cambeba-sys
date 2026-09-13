@@ -5,7 +5,7 @@ const pgSession = require('connect-pg-simple')(session);
 const path = require('path');
 
 const pool = require('./db/pool');
-const { requireAuth, attachAdmin } = require('./middleware/auth');
+const { enforceSessionTimeout, requireAuth, attachAdmin } = require('./middleware/auth');
 
 const authRoutes = require('./routes/auth');
 const memberRoutes = require('./routes/members');
@@ -27,13 +27,24 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'altere-este-segredo',
   resave: false,
   saveUninitialized: false,
+  rolling: true,
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 8 * 60 * 60 * 1000 // 8 horas
+    maxAge: 10 * 60 * 1000
   }
 }));
 
+app.use((req, res, next) => {
+  res.set({
+    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+    Pragma: 'no-cache',
+    Expires: '0'
+  });
+  next();
+});
+
+app.use(enforceSessionTimeout);
 app.use(attachAdmin);
 
 // Rotas públicas
