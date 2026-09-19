@@ -95,9 +95,10 @@ function generateActiveMembersReport(members) {
 
   doc.rect(0, 0, doc.page.width, 60).fill(COLORS.gray);
   doc.rect(0, 56, doc.page.width, 4).fill(COLORS.bronze);
+  doc.image(MEMBER_CARD_LOGO, 40, 8, { fit: [42, 42] });
   doc.fillColor('#ffffff').fontSize(16).font('Helvetica-Bold')
-    .text('Igreja Presbiteriana do Cambeba', 40, 16);
-  doc.fontSize(10).font('Helvetica').text('Relatório de Membros Ativos', 40, 38);
+    .text('Igreja Presbiteriana do Cambeba', 92, 16);
+  doc.fontSize(10).font('Helvetica').text('Relatório de Membros Ativos', 92, 38);
 
   doc.fillColor(COLORS.charcoal).fontSize(9).font('Helvetica')
     .text(`Gerado em ${formatDate(new Date())}  •  Total: ${members.length} membro(s)`, 40, 76);
@@ -146,9 +147,10 @@ function generateBirthdaysReport(members, month) {
 
   doc.rect(0, 0, doc.page.width, 60).fill(COLORS.gray);
   doc.rect(0, 56, doc.page.width, 4).fill(COLORS.bronze);
+  doc.image(MEMBER_CARD_LOGO, 40, 8, { fit: [42, 42] });
   doc.fillColor('#ffffff').fontSize(16).font('Helvetica-Bold')
-    .text('Igreja Presbiteriana do Cambeba', 40, 16);
-  doc.fontSize(10).font('Helvetica').text(`Aniversariantes de ${MESES[month - 1]}`, 40, 38);
+    .text('Igreja Presbiteriana do Cambeba', 92, 16);
+  doc.fontSize(10).font('Helvetica').text(`Aniversariantes de ${MESES[month - 1]}`, 92, 38);
 
   doc.fillColor(COLORS.charcoal).fontSize(9).font('Helvetica')
     .text(`Gerado em ${formatDate(new Date())}  •  Total: ${members.length} aniversariante(s)`, 40, 76);
